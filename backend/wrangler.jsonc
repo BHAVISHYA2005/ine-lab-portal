@@ -7,7 +7,7 @@
     {
       "binding": "DB",
       "database_name": "ine-lab-portal-db",
-      "database_id": "<YOUR_D1_ID>"
+      "database_id": "d98af77e-63df-41cd-b3c1-52e08b08b5cf"
     }
   ]
 }
