@@ -1,7 +1,9 @@
 import { createContext, useContext, useMemo, useState } from 'react';
+import { login as loginRequest, signup as signupRequest } from '../api/auth.js';
+import { AUTH_STORAGE_KEY } from '../api/client.js';
 
 const AuthContext = createContext(null);
-const STORAGE_KEY = 'ine-portal-auth';
+const STORAGE_KEY = AUTH_STORAGE_KEY;
 
 function readSession() {
   try {
@@ -18,10 +20,17 @@ export function AuthProvider({ children }) {
     token: session?.token ?? null,
     user: session?.user ?? null,
     isAuthenticated: Boolean(session?.token),
-    login: async (user) => {
-      const next = { token: 'local-session', user };
+    login: async (credentials) => {
+      const next = await loginRequest(credentials);
       localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
       setSession(next);
+      return next;
+    },
+    signup: async (credentials) => {
+      const next = await signupRequest(credentials);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+      setSession(next);
+      return next;
     },
     logout: () => {
       localStorage.removeItem(STORAGE_KEY);

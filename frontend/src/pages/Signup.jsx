@@ -6,14 +6,19 @@ import { useAuth } from '../context/AuthContext.jsx';
 
 export default function Signup() {
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { signup } = useAuth();
   const [form, setForm] = useState({ email: '', password: '' });
   const [error, setError] = useState('');
   async function handleSubmit(event) {
     event.preventDefault();
     if (form.password.length < 8) return setError('Password must be at least 8 characters.');
-    await login({ email: form.email, role: 'student' });
-    navigate('/dashboard');
+    setError('');
+    try {
+      await signup(form);
+      navigate('/dashboard');
+    } catch (requestError) {
+      setError(requestError.response?.data?.error ?? 'Unable to create your account. Try again.');
+    }
   }
   return <main className="auth-page"><div className="auth-card">
     <span className="eyebrow">START PRACTICING</span><h1>Build skill through reps.</h1><p className="lede">Create your student account and begin with a focused lab.</p>
