@@ -1,0 +1,13 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "ine-lab-portal-api",
+  "main": "src/index.js",
+  "compatibility_date": "2026-09-01",
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "ine-lab-portal-db",
+      "database_id": "<YOUR_D1_ID>"
+    }
+  ]
+}
