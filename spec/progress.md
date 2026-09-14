@@ -16,42 +16,42 @@
 - [x] Add `spec/api-contract.md`
 - [x] Add `spec/ui-spec.md`
 - [x] Add `spec/progress.md`
-- [ ] Commit and push: `docs(spec): add data model, API contract, and design system`
+- [x] Commit and push: `docs(spec): add data model, API contract, and design system`
 
 ## Phase 2 — Backend
 
-- [ ] Scaffold Express Worker with auth, labs, and submissions
-- [ ] Add D1 schema and seed data for labs
-- [ ] Verify `/health` locally with `wrangler dev`
-- [ ] Commit and push backend scaffold
-- [ ] Commit and push schema and seed data
+- [x] Scaffold Express Worker with auth, labs, and submissions
+- [x] Add D1 schema and seed data for labs
+- [x] Verify `/health` locally with `wrangler dev`
+- [x] Commit and push backend scaffold
+- [x] Commit and push schema and seed data
 
 ## Phase 3 — Frontend
 
-- [ ] Scaffold React app with auth context and pages
-- [ ] Add Axios client with JWT interceptors
-- [ ] Add lab list, detail, and submission flow
-- [ ] Verify frontend locally with `npm run dev`
-- [ ] Commit and push each logical unit
+- [x] Scaffold React app with auth context and pages
+- [x] Add Axios client with JWT interceptors
+- [x] Add lab list, detail, and submission flow
+- [x] Verify frontend locally with `npm run dev`
+- [x] Commit and push each logical unit
 
 ## Phase 4 — Deployment
 
-- [ ] Configure Cloudflare Workers and D1
-- [ ] Configure Cloudflare Pages
-- [ ] Deploy backend and frontend
-- [ ] Update production CORS and test live authentication
-- [ ] Commit and push each deployment configuration unit
+- [x] Configure Cloudflare Workers and D1
+- [x] Configure Cloudflare Pages
+- [x] Deploy backend and frontend
+- [x] Update production CORS and test live authentication
+- [x] Commit and push each deployment configuration unit
 
 ## Phase 5 — Tests
 
-- [ ] Add backend auth service tests
-- [ ] Add backend labs route tests
-- [ ] Add frontend LabCard test
-- [ ] Run Vitest in both packages
-- [ ] Commit and push: `test: add vitest unit and integration tests`
+- [x] Add backend auth service tests
+- [x] Add backend labs route tests
+- [x] Add frontend LabCard test
+- [x] Run Vitest in both packages
+- [x] Commit and push: `test: add vitest unit and integration tests`
 
 ## Phase 6 — Documentation
 
-- [ ] Add `README.md` project documentation
-- [ ] Add `docs/AI_USAGE.md`
+- [x] Add `README.md` project documentation
+- [x] Add `docs/AI_USAGE.md`
 - [ ] Commit and push: `docs: add README and AI_USAGE guide`
