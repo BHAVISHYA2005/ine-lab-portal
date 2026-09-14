@@ -47,7 +47,7 @@ function createResponse() {
     emit(event, ...args) { listeners.get(event)?.(...args); },
     toResponse() {
       const body = chunks.map((chunk) => typeof chunk === 'string' ? chunk : new TextDecoder().decode(chunk)).join('');
-      return new Response(body, { status: this.statusCode, headers });
+      return new Response(this.statusCode === 204 ? null : body, { status: this.statusCode, headers });
     },
   };
 }

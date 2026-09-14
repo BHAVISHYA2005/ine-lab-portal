@@ -10,6 +10,7 @@ const publicUser = (user) => ({
 });
 
 export async function createToken(user, secret) {
+  if (!secret?.trim()) throw new AppError(500, 'JWT_SECRET is not configured');
   return new SignJWT({ email: user.email, role: user.role })
     .setProtectedHeader({ alg: 'HS256' })
     .setSubject(String(user.id))
