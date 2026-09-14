@@ -14,4 +14,8 @@ function useRequest(request, initialValue) {
 }
 
 export function useLabs() { return useRequest(getLabs, []); }
-export function useLab(id) { return useRequest(() => getLab(id), null); }
+
+export function useLab(id) {
+  const request = useCallback(() => getLab(id), [id]);
+  return useRequest(request, null);
+}
