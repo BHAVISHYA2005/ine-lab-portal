@@ -63,11 +63,15 @@ Protected. Returns all available labs.
 
 Protected. Returns one lab by numeric ID. Returns `404` when the lab does not exist.
 
+### `GET /api/labs/:id/question`
+
+Protected. Generates a fresh AI practice question for the lab on every request (no caching). Returns `{ "question": string | null }`; `question` is `null` when the AI service is unavailable or times out, and the frontend hides the panel in that case.
+
 ## Submissions
 
 ### `POST /api/submissions`
 
-Protected. Creates a submission for the current user.
+Protected. Creates a submission for the current user and automatically grades it with the AI reviewer before saving. `status` is set directly from the AI verdict (`approved`, `rejected`, or `needs_review`); there is no separate human review step.
 
 Request body:
 
@@ -78,10 +82,27 @@ Request body:
 }
 ```
 
+Response includes the AI review fields alongside the stored submission:
+
+```json
+{
+  "submission": {
+    "id": 1,
+    "status": "approved",
+    "ai_verdict": "approved",
+    "ai_feedback": "...",
+    "ai_confidence": 0.95,
+    "ai_reviewed_at": "2026-09-14T00:00:00.000Z"
+  }
+}
+```
+
+If the AI service fails or times out, the submission still saves with `status: "needs_review"` and null feedback/confidence rather than failing the request.
+
 ### `GET /api/submissions`
 
-Protected. Returns submissions belonging to the current authenticated user.
+Protected. Returns submissions belonging to the current authenticated user, including AI review fields.
 
 ### `GET /api/submissions/:id`
 
-Protected. Returns one submission by ID when it belongs to the current authenticated user.
+Protected. Returns one submission by ID when it belongs to the current authenticated user, including AI review fields.

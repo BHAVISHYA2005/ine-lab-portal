@@ -23,6 +23,7 @@ The database is Cloudflare D1 (SQLite). Foreign keys are used for relationships 
 | `description` | TEXT | NOT NULL |
 | `starter_code` | TEXT | Nullable |
 | `created_at` | TEXT | DEFAULT CURRENT_TIMESTAMP |
+| `rubric` | TEXT | Nullable; optional grading context passed to the AI reviewer |
 
 ## `submissions`
 
@@ -32,8 +33,12 @@ The database is Cloudflare D1 (SQLite). Foreign keys are used for relationships 
 | `user_id` | INTEGER | NOT NULL; REFERENCES `users(id)` |
 | `lab_id` | INTEGER | NOT NULL; REFERENCES `labs(id)` |
 | `solution` | TEXT | NOT NULL |
-| `status` | TEXT | DEFAULT `'pending'` |
+| `status` | TEXT | `approved` \| `rejected` \| `needs_review`; set automatically by the AI reviewer |
 | `submitted_at` | TEXT | DEFAULT CURRENT_TIMESTAMP |
+| `ai_verdict` | TEXT | Same value as `status` at the time of review, kept for audit purposes |
+| `ai_feedback` | TEXT | Nullable; written feedback from the AI reviewer |
+| `ai_confidence` | REAL | Nullable; 0–1 confidence reported by the AI reviewer |
+| `ai_reviewed_at` | TEXT | Nullable; timestamp of the AI review |
 
 ## Indexes
 
