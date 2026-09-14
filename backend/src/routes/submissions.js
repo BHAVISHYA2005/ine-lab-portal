@@ -1,9 +1,11 @@
 import express from 'express';
 import { z } from 'zod';
-import { getDb } from '../db.js';
+import { getDb, getEnv } from '../db.js';
 import { requireAuth } from '../middleware/auth.js';
 import { asyncHandler } from '../middleware/error.js';
 import { validate } from '../middleware/validate.js';
+import { reviewSubmission } from '../services/ai.service.js';
+import { getLab } from '../services/lab.service.js';
 import { createSubmission, getSubmission, listSubmissions } from '../services/submission.service.js';
 
 const createSchema = z.object({
@@ -15,7 +17,10 @@ const router = express.Router();
 router.use(requireAuth);
 
 router.post('/', validate(createSchema), asyncHandler(async (req, res) => {
-  const submission = await createSubmission(getDb(req), req.user.id, req.body.labId, req.body.solution);
+  const db = getDb(req);
+  const lab = await getLab(db, req.body.labId);
+  const aiResult = await reviewSubmission(getEnv(req), { lab, solution: req.body.solution });
+  const submission = await createSubmission(db, req.user.id, lab.id, req.body.solution, aiResult);
   res.status(201).json({ submission });
 }));
 

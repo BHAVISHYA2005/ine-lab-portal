@@ -1,11 +1,18 @@
 import { AppError } from '../middleware/error.js';
 
-export async function createSubmission(db, userId, labId, solution) {
-  const lab = await db.prepare('SELECT id FROM labs WHERE id = ?').bind(labId).first();
-  if (!lab) throw new AppError(404, 'Lab not found');
+export async function createSubmission(db, userId, labId, solution, aiResult) {
   const result = await db.prepare(
-    'INSERT INTO submissions (user_id, lab_id, solution) VALUES (?, ?, ?)'
-  ).bind(userId, labId, solution).run();
+    'INSERT INTO submissions (user_id, lab_id, solution, status, ai_verdict, ai_feedback, ai_confidence, ai_reviewed_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)'
+  ).bind(
+    userId,
+    labId,
+    solution,
+    aiResult.verdict,
+    aiResult.verdict,
+    aiResult.feedback,
+    aiResult.confidence,
+    new Date().toISOString(),
+  ).run();
   return db.prepare('SELECT * FROM submissions WHERE id = ?').bind(result.meta.last_row_id).first();
 }
 
