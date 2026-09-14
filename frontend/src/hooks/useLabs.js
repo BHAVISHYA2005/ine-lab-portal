@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { getLab, getLabs } from '../api/labs.js';
+import { getLab, getLabQuestion, getLabs } from '../api/labs.js';
 
 function useRequest(request, initialValue) {
   const [data, setData] = useState(initialValue);
@@ -17,5 +17,10 @@ export function useLabs() { return useRequest(getLabs, []); }
 
 export function useLab(id) {
   const request = useCallback(() => getLab(id), [id]);
+  return useRequest(request, null);
+}
+
+export function useLabQuestion(id) {
+  const request = useCallback(() => getLabQuestion(id), [id]);
   return useRequest(request, null);
 }
